@@ -1,9 +1,6 @@
 import classNames from 'classnames';
-import sizeOf from 'image-size';
-import React from 'react';
+import React, { useCallback } from 'react';
 
-import { useFetch } from '../../../hooks/use_fetch';
-import { fetchBinary } from '../../../utils/fetchers';
 
 /**
  * @typedef {object} Props
@@ -16,28 +13,19 @@ import { fetchBinary } from '../../../utils/fetchers';
  * @type {React.VFC<Props>}
  */
 const CoveredImage = ({ alt, src }) => {
-  const { data, isLoading } = useFetch(src, fetchBinary);
-
-  const imageSize = React.useMemo(() => {
-    return data !== null ? sizeOf(Buffer.from(data)) : null;
-  }, [data]);
-
-  const blobUrl = React.useMemo(() => {
-    return data !== null ? URL.createObjectURL(new Blob([data])) : null;
-  }, [data]);
-
+  const callbackRef = React.useRef(null)
   const [containerSize, setContainerSize] = React.useState({ height: 0, width: 0 });
-  /** @type {React.RefCallback<HTMLDivElement>} */
-  const callbackRef = React.useCallback((el) => {
-    setContainerSize({
-      height: el?.clientHeight ?? 0,
-      width: el?.clientWidth ?? 0,
-    });
-  }, []);
+  const [imageSize, setImageSize] = React.useState({ width: 0, height: 0 })
 
-  if (isLoading || data === null || blobUrl === null) {
-    return null;
-  }
+  const onload = useCallback((ev) => {
+    setImageSize({ width: ev.target.width, height: ev.target.height })
+    if(callbackRef.current) {
+      setContainerSize({
+        height: callbackRef.current.clientHeight ?? 0,
+        width: callbackRef.current.clientWidth ?? 0,
+      });
+    }
+  }, [setImageSize, setContainerSize, callbackRef])
 
   const containerRatio = containerSize.height / containerSize.width;
   const imageRatio = imageSize?.height / imageSize?.width;
@@ -50,7 +38,9 @@ const CoveredImage = ({ alt, src }) => {
           'w-auto h-full': containerRatio > imageRatio,
           'w-full h-auto': containerRatio <= imageRatio,
         })}
-        src={blobUrl}
+        onLoad={onload}
+        src={src}
+        loading="lazy"
       />
     </div>
   );
