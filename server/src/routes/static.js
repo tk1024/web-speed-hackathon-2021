@@ -16,12 +16,10 @@ router.use(
   }),
 );
 
-router.use(
-  serveStatic(PUBLIC_PATH, {
-    etag: false,
-    lastModified: false,
-  }),
-);
+router.use(serveStatic(PUBLIC_PATH, {
+  etag: false,
+  lastModified: false,
+}));
 
 router.use(
   serveStatic(CLIENT_DIST_PATH, {

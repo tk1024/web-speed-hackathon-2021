@@ -1,9 +1,12 @@
+import fs from "fs"
 import bodyParser from 'body-parser';
 import Express from 'express';
 import session from 'express-session';
 
+import sharp from "sharp"
 import { apiRouter } from './routes/api';
 import { staticRouter } from './routes/static';
+import { PUBLIC_PATH } from "./paths";
 
 const app = Express();
 
@@ -20,15 +23,19 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.raw({ limit: '10mb' }));
 
-app.use((_req, res, next) => {
-  res.header({
-    'Cache-Control': 'max-age=0, no-transform',
-    Connection: 'close',
-  });
-  return next();
-});
-
 app.use('/api/v1', apiRouter);
+app.use("/images", async function (req, res, next) {
+  const path = `${PUBLIC_PATH}/images${req.path}`
+  const avifPath = `${PUBLIC_PATH}/images${req.path}`.replace("jpg", "avif")
+  if (!fs.existsSync(avifPath)) {
+    await sharp(path).avif({ chromaSubsampling: '4:2:0' }).toFile(avifPath)
+  }
+  const image = fs.readFileSync(avifPath)
+  res.writeHead(200, { 'Content-Type': 'image/avif' });
+  res.end(image, 'binary');
+  // next()
+})
+
 app.use(staticRouter);
 
 export { app };
