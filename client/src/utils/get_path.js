@@ -3,7 +3,7 @@
  * @returns {string}
  */
 function getImagePath(imageId) {
-  return `/images/1000-${imageId}.jpg`;
+  return `/images/${imageId}.jpg`;
 }
 
 /**
@@ -27,7 +27,7 @@ function getSoundPath(soundId) {
  * @returns {string}
  */
 function getProfileImagePath(profileImageId) {
-  return `/images/profiles/128-${profileImageId}.jpg`;
+  return `/images/profiles/${profileImageId}.jpg`;
 }
 
 export { getImagePath, getMoviePath, getSoundPath, getProfileImagePath };
