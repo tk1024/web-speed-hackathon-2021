@@ -15,7 +15,10 @@ async function convertImage(buffer, options) {
       height: options.height,
       width: options.width,
     })
-    .toFormat(options.extension ?? 'jpeg')
+    .resize({ width: 1024 })
+    .toFormat(options.extension ?? 'avif', {
+      chromaSubsampling: "4:2:0",
+    })
     .toBuffer();
 }
 
