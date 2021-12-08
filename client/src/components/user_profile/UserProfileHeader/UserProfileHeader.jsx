@@ -1,5 +1,4 @@
 import FastAverageColor from 'fast-average-color';
-import moment from 'moment';
 import React from 'react';
 
 import { getProfileImagePath } from '../../../utils/get_path';
@@ -38,8 +37,8 @@ const UserProfileHeader = ({ user }) => {
             <FontAwesomeIcon iconType="calendar-alt" styleType="regular" />
           </span>
           <span>
-            <time dateTime={moment(user.createdAt).toISOString()}>
-              {moment(user.createdAt).locale('ja').format('LL')}
+            <time dateTime={user.createdAt}>
+              {(new Date(user.createdAt)).toLocaleDateString("ja-JP", { year: 'numeric', month: 'long', day: 'numeric' })}
             </time>
             からサービスを利用しています
           </span>
