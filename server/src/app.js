@@ -30,9 +30,14 @@ app.use("/images", async function (req, res, next) {
   if (!fs.existsSync(avifPath)) {
     await sharp(path).avif({ chromaSubsampling: '4:2:0' }).toFile(avifPath)
   }
-  const image = fs.readFileSync(avifPath)
-  res.writeHead(200, { 'Content-Type': 'image/avif' });
-  res.end(image, 'binary');
+  if (`${req.path}`.indexOf("jpg") > -1) {
+    res.redirect(301, `/images${req.path}`.replace("jpg", "avif"))
+  } else {
+    next()
+  }
+  // const image = fs.readFileSync(avifPath)
+  // res.writeHead(200, { 'Content-Type': 'image/avif' });
+  // res.end(image, 'binary');
   // next()
 })
 
