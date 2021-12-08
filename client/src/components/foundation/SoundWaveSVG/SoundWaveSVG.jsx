@@ -3,6 +3,7 @@ import _mean from 'lodash.mean';
 import _chunk from 'lodash.chunk';
 import _max from 'lodash.max';
 import React from 'react';
+import { AudioContext } from "standardized-audio-context"
 
 /**
  * @param {ArrayBuffer} data
