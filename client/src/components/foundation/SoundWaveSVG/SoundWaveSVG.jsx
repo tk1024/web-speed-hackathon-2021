@@ -3,13 +3,13 @@ import _mean from 'lodash.mean';
 import _chunk from 'lodash.chunk';
 import _max from 'lodash.max';
 import React from 'react';
-import { AudioContext } from "standardized-audio-context"
 
 /**
  * @param {ArrayBuffer} data
  * @returns {Promise<{ max: number, peaks: number[] }}
  */
 async function calculate(data) {
+  const { AudioContext } = await import("standardized-audio-context")
   const audioCtx = new AudioContext();
 
   // 音声をデコードする
