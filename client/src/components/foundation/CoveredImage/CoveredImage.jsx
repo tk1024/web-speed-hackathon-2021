@@ -1,9 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { useFetch } from '../../../hooks/use_fetch';
-import { fetchBinary } from '../../../utils/fetchers';
-
 /**
  * @typedef {object} Props
  * @property {string} alt
@@ -15,15 +12,7 @@ import { fetchBinary } from '../../../utils/fetchers';
  * @type {React.VFC<Props>}
  */
 const CoveredImage = ({ alt, src }) => {
-  const [imageSize, setImageSize] = React.useState(null)
-
-  React.useEffect(() => {
-    const img = new Image()
-    img.onload = function () {
-      setImageSize({ width: this.width, height: this.height })
-    }
-    img.src = src
-  }, [src, setImageSize]);
+  const imageSize = { width: src.split(/-|\./)[5], height: src.split(/-|\./)[6] }
 
   const [containerSize, setContainerSize] = React.useState({ height: 0, width: 0 });
   /** @type {React.RefCallback<HTMLDivElement>} */
@@ -34,12 +23,8 @@ const CoveredImage = ({ alt, src }) => {
     });
   }, []);
 
-  if (!imageSize) {
-    return null;
-  }
-
   const containerRatio = containerSize.height / containerSize.width;
-  const imageRatio = imageSize?.height / imageSize?.width;
+  const imageRatio = imageSize.height / imageSize.width;
 
   return (
     <div ref={callbackRef} className="relative w-full h-full overflow-hidden">
@@ -50,6 +35,9 @@ const CoveredImage = ({ alt, src }) => {
           'w-full h-auto': containerRatio <= imageRatio,
         })}
         src={src}
+        width={imageSize.width}
+        height={imageSize.height}
+        loading="lazy"
       />
     </div>
   );
