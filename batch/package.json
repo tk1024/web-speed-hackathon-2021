@@ -12,6 +12,8 @@
     "@ffmpeg/core": "^0.10.0",
     "@ffmpeg/ffmpeg": "^0.10.1",
     "ffmpeg": "^0.0.4",
-    "sharp": "^0.29.3"
+    "lodash": "^4.17.21",
+    "sharp": "^0.29.3",
+    "web-audio-api": "^0.2.2"
   }
 }
