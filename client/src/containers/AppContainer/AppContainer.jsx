@@ -17,6 +17,17 @@ const AppContainer = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  React.useEffect(() => {
+    if (!document.getElementById("webfont")) {
+      fetch("/styles/webfont.css").then(res => res.text()).then(css => {
+        const style = document.createElement("style")
+        style.id = "webfont"
+        style.innerHTML = css
+        document.head.appendChild(style)
+      })
+    }
+  }, [])
+
   const [modalType, setModalType] = React.useState('none');
   const handleRequestOpenAuthModal = React.useCallback(() => setModalType('auth'), []);
   const handleRequestOpenPostModal = React.useCallback(() => setModalType('post'), []);

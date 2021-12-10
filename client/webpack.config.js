@@ -2,12 +2,14 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const webpack = require('webpack');
 
 const SRC_PATH = path.resolve(__dirname, './src');
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
 const UPLOAD_PATH = path.resolve(__dirname, '../upload');
 const DIST_PATH = path.resolve(__dirname, '../dist');
+const TerserPlugin = require('terser-webpack-plugin');
 
 /** @type {import('webpack').Configuration} */
 const config = {
@@ -27,6 +29,9 @@ const config = {
       path.resolve(SRC_PATH, './buildinfo.js'),
       path.resolve(SRC_PATH, './index.jsx'),
     ],
+    webfont: [
+      path.resolve(SRC_PATH, './styles/webfont.css'),
+    ]
   },
   mode: 'none',
   module: {
@@ -51,9 +56,6 @@ const config = {
     path: DIST_PATH,
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      Buffer: ['buffer', 'Buffer'],
-    }),
     new webpack.EnvironmentPlugin({
       BUILD_DATE: new Date().toISOString(),
       // Heroku では SOURCE_VERSION 環境変数から commit hash を参照できます
@@ -75,6 +77,22 @@ const config = {
       path: false,
     },
   },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          ecma: 6,
+          compress: true,
+          output: {
+            comments: false,
+            beautify: false
+          }
+        }
+      }),
+      new CssMinimizerPlugin(),
+    ],
+  }
 };
 
 module.exports = config;
