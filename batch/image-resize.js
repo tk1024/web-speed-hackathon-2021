@@ -10,7 +10,7 @@ const main = async () => {
     const inputPath = `${imageBasePath}/${path}`
     const outputPath = `${imageBasePath}/${path.replace("jpg", "avif")}`
 
-    return sharp(inputPath).resize({ width: 1024 }).avif({
+    return sharp(inputPath).resize({ width: 574 }).avif({
       chromaSubsampling: "4:2:0",
     }).toFile(outputPath)
   }))
