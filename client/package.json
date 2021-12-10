@@ -4,14 +4,14 @@
   "version": "0.0.1",
   "license": "MPL-2.0",
   "scripts": {
-    "analyze": "cross-env NODE_ENV=production webpack --analyze",
+    "analyze": "cross-env NODE_ENV=production webpack --mode=production --analyze",
     "prebuild": "rimraf ../dist",
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack --mode=production",
     "develop": "cross-env NODE_ENV=development webpack serve"
   },
   "dependencies": {
-    "buffer": "6.0.3",
     "classnames": "2.3.1",
+    "css-minimizer-webpack-plugin": "^3.2.0",
     "fast-average-color": "7.0.1",
     "normalize.css": "8.0.1",
     "react": "17.0.2",
@@ -20,6 +20,7 @@
     "react-router-dom": "6.0.2",
     "regenerator-runtime": "0.13.9",
     "tailwindcss": "2.2.19",
+    "terser-webpack-plugin": "^5.2.5",
     "wicg-inert": "3.1.1"
   },
   "devDependencies": {
