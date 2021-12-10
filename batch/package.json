@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sharp": "^0.29.3"
+    "lodash": "^4.17.21",
+    "sharp": "^0.29.3",
+    "web-audio-api": "^0.2.2"
   }
 }
