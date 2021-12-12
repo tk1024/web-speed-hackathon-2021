@@ -1,0 +1,1 @@
+echo "export const ROOT_PATH = '/app'" > root.ts
