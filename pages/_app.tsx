@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
 import { AppPage } from '../client/src/components/application/AppPage';
 import '../styles/globals.css';
-import '../styles/webfont.css';
+// import '../styles/webfont.css';
 // import 'tailwindcss/tailwind.css'
 
 import { AuthModalContainer } from '../client/src/containers/AuthModalContainer';

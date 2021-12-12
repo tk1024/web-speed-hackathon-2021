@@ -5080,7 +5080,7 @@
     U+9a11, U+9a16, U+9a1a, U+9a20;
 }
 @font-face {
-  font-display: block;
+  font-display: swap;
   font-family: '源暎エムゴ';
   font-weight: 800;
   src: url(/fonts/genei-m-gothic/extraBold/039.woff) format('woff');
@@ -5099,7 +5099,7 @@
     U+fa30-fa44;
 }
 @font-face {
-  font-display: block;
+  font-display: swap;
   font-family: '源暎エムゴ';
   font-weight: 800;
   src: url(/fonts/genei-m-gothic/extraBold/031.woff) format('woff');
