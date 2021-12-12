@@ -2,6 +2,7 @@
 const next = require('next');
 const express = require('express');
 const https = require("https");
+const compression = require('compression')
 
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express();
 
+  server.use(compression())
   server.use(express.static('/app/public'))
 
   server.all('*', (req, res) => {
