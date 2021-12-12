@@ -17,7 +17,7 @@ const LIMIT = 10;
  * @param {(apiPath: string) => Promise<T[]>} fetcher
  * @returns {ReturnValues<T>}
  */
-export function useInfiniteFetch(apiPath: string, fetcher: (apiPath: string) => Promise<any>) {
+export function useInfiniteFetch(apiPath: string, fetcher: (apiPath: string) => Promise<any>, initial?: any) {
   const internalRef = React.useRef({ isLoading: false, offset: 0 });
 
   const [result, setResult] = React.useState<{
@@ -72,17 +72,29 @@ export function useInfiniteFetch(apiPath: string, fetcher: (apiPath: string) => 
   }, [apiPath, fetcher]);
 
   React.useEffect(() => {
-    setResult(() => ({
-      data: [],
-      error: null,
-      isLoading: true,
-    }));
-    internalRef.current = {
-      isLoading: false,
-      offset: 0,
-    };
+    if (initial) {
+      setResult(() => ({
+        data: initial,
+        error: null,
+        isLoading: true,
+      }));
+      internalRef.current = {
+        isLoading: false,
+        offset: 10,
+      };
+    } else {
+      setResult(() => ({
+        data: [],
+        error: null,
+        isLoading: true,
+      }));
+      internalRef.current = {
+        isLoading: false,
+        offset: 0,
+      };
+      fetchMore();
+    }
 
-    fetchMore();
   }, [fetchMore]);
 
   return {
