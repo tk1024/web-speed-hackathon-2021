@@ -5,7 +5,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="ja">
         <Head>
-          <link rel="stylesheet" href="/webfont.css" />
         </Head>
         <body>
           <Main />

@@ -19,6 +19,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     setActiveUser(data)
   }, [data])
 
+  useEffect(() => {
+    setTimeout(() => {
+      document.head.innerHTML += `<link rel="stylesheet" href="webfont.css" />`
+    }, 100)
+  }, [])
+
   const [modalType, setModalType] = React.useState('none');
   const handleRequestOpenAuthModal = React.useCallback(() => setModalType('auth'), []);
   const handleRequestOpenPostModal = React.useCallback(() => setModalType('post'), []);

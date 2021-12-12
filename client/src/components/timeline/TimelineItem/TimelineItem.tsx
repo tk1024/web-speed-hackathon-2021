@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from "next/link"
 
 import { getProfileImagePath } from '../../../utils/get_path';
@@ -32,9 +32,7 @@ const isClickedAnchorOrButton = (target: any, currentTarget: any) => {
  */
 
 /** @type {React.VFC<Props>} */
-const TimelineItem = ({
-  post
-}: any) => {
+const TimelineItem = ({ post }: any) => {
   const router = useRouter()
 
   /**
