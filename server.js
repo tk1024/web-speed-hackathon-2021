@@ -11,12 +11,14 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express();
 
+  server.use(express.static('/app/public'))
+
   server.all('*', (req, res) => {
-    if ([/images/, /movies/, /sounds/, /sound-svgs/].some(pattern => req.url.indexOf(pattern) === 0)) {
-      console.log(`/app/public${req.url}`)
-      res.sendFile(`/app/public${req.url}`);
-      return;
-    }
+    // if ([/images/, /movies/, /sounds/, /sound-svgs/].some(pattern => req.url.indexOf(pattern) === 0)) {
+    //   console.log(`/app/public${req.url}`)
+    //   res.sendFile(`/app/public${req.url}`);
+    //   return;
+    // }
 
     // If not a static file, just let next.js do the rest
     return handle(req, res);
