@@ -1,14 +1,11 @@
 import type { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
 import { AppPage } from '../client/src/components/application/AppPage';
-import '../styles/globals.css';
-import '../styles/webfont.css';
-// import 'tailwindcss/tailwind.css'
-
 import { AuthModalContainer } from '../client/src/containers/AuthModalContainer';
 import { NewPostModalContainer } from '../client/src/containers/NewPostModalContainer';
 import { useFetch } from '../client/src/hooks/use_fetch';
 import { fetchJSON } from '../client/src/utils/fetchers';
+import '../styles/globals.css';
 
 /** @type {React.VFC} */
 function MyApp({ Component, pageProps }: AppProps) {
@@ -18,6 +15,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setActiveUser(data)
   }, [data])
+
+  useEffect(() => {
+    document.head.innerHTML += `<link rel="stylesheet" href="/webfont.css" />`
+  }, [])
 
   const [modalType, setModalType] = React.useState('none');
   const handleRequestOpenAuthModal = React.useCallback(() => setModalType('auth'), []);
