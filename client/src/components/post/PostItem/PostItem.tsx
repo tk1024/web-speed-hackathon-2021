@@ -1,20 +1,17 @@
 import Link from "next/link";
 import React from 'react';
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getProfileImagePath } from '../../../utils/get_path';
 import { ImageArea } from '../../post/ImageArea';
 import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 
-
-/**
- * @typedef {object} Props
- * @property {Models.Post} post
- */
+interface Props {
+  post: any
+}
 
 /** @type {React.VFC<Props>} */
-const PostItem = ({
-  post
-}: any) => {
+const PostItem = ({ post }: Props) => {
   return (
     <article className="px-1 sm:px-4">
       <div className="pb-4 pt-4 px-4 border-b border-gray-300">
@@ -22,7 +19,7 @@ const PostItem = ({
           <div className="flex-grow-0 flex-shrink-0 pr-2">
             <Link href={`/users/${post.user.username}`}>
               <a className="block w-14 h-14 bg-gray-300 border border-gray-300 rounded-full hover:opacity-95 overflow-hidden sm:w-16 sm:h-16">
-                <img alt={post.user.profileImage.alt} src={getProfileImagePath(post.user.profileImage.id)} width={128} height={128} />
+                <LazyLoadImage alt={post.user.profileImage.alt} src={getProfileImagePath(post.user.profileImage.id)} width={128} height={128} />
               </a>
             </Link>
           </div>
@@ -47,7 +44,7 @@ const PostItem = ({
           <p className="text-gray-800 text-xl leading-relaxed">{post.text}</p>
           {post.images?.length > 0 ? (
             <div className="relative mt-2 w-full">
-              <ImageArea images={post.images} />
+              <ImageArea images={post.images} fv={true} />
             </div>
           ) : null}
           {post.movie ? (

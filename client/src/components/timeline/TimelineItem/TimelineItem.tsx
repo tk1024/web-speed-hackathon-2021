@@ -6,6 +6,7 @@ import { ImageArea } from '../../post/ImageArea';
 import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 import { useRouter } from 'next/router';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 /**
  * @param {Element} target
@@ -26,13 +27,13 @@ const isClickedAnchorOrButton = (target: any, currentTarget: any) => {
   return false;
 };
 
-/**
- * @typedef {object} Props
- * @property {Models.Post} post
- */
+interface Props {
+  post: any
+  index: number
+}
 
 /** @type {React.VFC<Props>} */
-const TimelineItem = ({ post }: any) => {
+const TimelineItem = ({ post, index }: Props) => {
   const router = useRouter()
 
   /**
@@ -56,7 +57,7 @@ const TimelineItem = ({ post }: any) => {
         <div className="flex-grow-0 flex-shrink-0 pr-2 sm:pr-4">
           <Link href={`/users/${post.user.username}`}>
             <a className="block w-12 h-12 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-16 sm:h-16">
-              <img alt={post.user.profileImage.alt} src={getProfileImagePath(post.user.profileImage.id)} width={128} height={128} />
+              <LazyLoadImage alt={post.user.profileImage.alt} src={getProfileImagePath(post.user.profileImage.id)} width={128} height={128} />
             </a>
           </Link>
         </div>
@@ -84,7 +85,7 @@ const TimelineItem = ({ post }: any) => {
           <p className="text-gray-800 leading-relaxed">{post.text}</p>
           {post.images?.length > 0 ? (
             <div className="relative mt-2 w-full">
-              <ImageArea images={post.images} />
+              <ImageArea images={post.images} fv={index < 5} />
             </div>
           ) : null}
           {post.movie ? (

@@ -2,19 +2,16 @@ import React from 'react';
 
 import { TimelineItem } from '../TimelineItem';
 
-/**
- * @typedef {object} Props
- * @property {Array<Models.Post>} timeline
- */
+interface Props {
+  timeline: any[]
+}
 
 /** @type {React.VFC<Props>} */
-const Timeline = ({
-  timeline
-}: any) => {
+const Timeline = ({ timeline }: Props) => {
   return (
     <section>
-      {timeline.map((post: any) => {
-        return <TimelineItem key={post.id} post={post} />;
+      {timeline.map((post, index) => {
+        return <TimelineItem key={post.id} post={post} index={index} />;
       })}
     </section>
   );
