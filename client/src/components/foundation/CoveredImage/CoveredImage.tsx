@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 /**
  * @typedef {object} Props
@@ -11,10 +12,7 @@ import React from 'react';
  * アスペクト比を維持したまま、要素のコンテンツボックス全体を埋めるように画像を拡大縮小します
  * @type {React.VFC<Props>}
  */
-const CoveredImage = ({
-  alt,
-  src
-}: any) => {
+const CoveredImage = ({ alt, src }: any) => {
   const imageSize = { width: src.split(/-|\./)[5], height: src.split(/-|\./)[6] }
 
   const [containerSize, setContainerSize] = React.useState({ height: 0, width: 0 });
@@ -31,7 +29,7 @@ const CoveredImage = ({
 
   return (
     <div ref={callbackRef} className="relative w-full h-full overflow-hidden">
-      <img
+      <LazyLoadImage
         alt={alt}
         className={classNames('absolute left-1/2 top-1/2 max-w-none transform -translate-x-1/2 -translate-y-1/2', {
           'w-auto h-full': containerRatio > imageRatio,
