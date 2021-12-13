@@ -17,13 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [data])
 
   useEffect(() => {
-    document.head.innerHTML += `
-    <link rel="stylesheet" href="/webfont-400.css" />
-    <link rel="stylesheet" href="/webfont-500.css" />
-    <link rel="stylesheet" href="/webfont-600.css" />
-    <link rel="stylesheet" href="/webfont-700.css" />
-    <link rel="stylesheet" href="/webfont-800.css" />
-  `
+    document.head.innerHTML += `<link rel="stylesheet" href="/webfont.css" />`
   }, [])
 
   const [modalType, setModalType] = React.useState('none');
