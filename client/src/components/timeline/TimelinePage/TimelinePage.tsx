@@ -2,15 +2,12 @@ import React from 'react';
 
 import { Timeline } from '../Timeline';
 
-/**
- * @typedef {object} Props
- * @property {Array<Models.Post>} timeline
- */
+interface Props {
+  timeline: any[]
+}
 
 /** @type {React.VFC<Props>} */
-const TimelinePage = ({
- timeline
-}: any) => {
+const TimelinePage = ({ timeline }: Props) => {
   return <Timeline timeline={timeline} />;
 };
 

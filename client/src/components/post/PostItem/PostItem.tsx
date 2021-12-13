@@ -6,16 +6,12 @@ import { ImageArea } from '../../post/ImageArea';
 import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
 
-
-/**
- * @typedef {object} Props
- * @property {Models.Post} post
- */
+interface Props {
+  post: any
+}
 
 /** @type {React.VFC<Props>} */
-const PostItem = ({
-  post
-}: any) => {
+const PostItem = ({ post }: Props) => {
   return (
     <article className="px-1 sm:px-4">
       <div className="pb-4 pt-4 px-4 border-b border-gray-300">
@@ -48,7 +44,7 @@ const PostItem = ({
           <p className="text-gray-800 text-xl leading-relaxed">{post.text}</p>
           {post.images?.length > 0 ? (
             <div className="relative mt-2 w-full">
-              <ImageArea images={post.images} />
+              <ImageArea images={post.images} fv={true} />
             </div>
           ) : null}
           {post.movie ? (

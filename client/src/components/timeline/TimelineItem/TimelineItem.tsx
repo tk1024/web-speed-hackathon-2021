@@ -27,13 +27,13 @@ const isClickedAnchorOrButton = (target: any, currentTarget: any) => {
   return false;
 };
 
-/**
- * @typedef {object} Props
- * @property {Models.Post} post
- */
+interface Props {
+  post: any
+  index: number
+}
 
 /** @type {React.VFC<Props>} */
-const TimelineItem = ({ post }: any) => {
+const TimelineItem = ({ post, index }: Props) => {
   const router = useRouter()
 
   /**
@@ -85,7 +85,7 @@ const TimelineItem = ({ post }: any) => {
           <p className="text-gray-800 leading-relaxed">{post.text}</p>
           {post.images?.length > 0 ? (
             <div className="relative mt-2 w-full">
-              <ImageArea images={post.images} />
+              <ImageArea images={post.images} fv={index < 5} />
             </div>
           ) : null}
           {post.movie ? (

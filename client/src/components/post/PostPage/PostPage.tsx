@@ -3,17 +3,13 @@ import React from 'react';
 import { CommentList } from '../CommentList';
 import { PostItem } from '../PostItem';
 
-/**
- * @typedef {object} Props
- * @property {Array<Models.Comment>} comments
- * @property {Models.Post} post
- */
+interface Props {
+  comments: any
+  post: any
+}
 
 /** @type {React.VFC<Props>} */
-const PostPage = ({
-  comments,
-  post
-}: any) => {
+const PostPage = ({ comments, post }: Props) => {
   return (
     <>
       <PostItem post={post} />
