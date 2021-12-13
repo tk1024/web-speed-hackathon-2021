@@ -16,6 +16,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     setActiveUser(data)
   }, [data])
 
+  useEffect(() => {
+    document.head.innerHTML += `
+    <link rel="stylesheet" href="/webfont-400.css" />
+    <link rel="stylesheet" href="/webfont-500.css" />
+    <link rel="stylesheet" href="/webfont-600.css" />
+    <link rel="stylesheet" href="/webfont-700.css" />
+    <link rel="stylesheet" href="/webfont-800.css" />
+  `
+  }, [])
+
   const [modalType, setModalType] = React.useState('none');
   const handleRequestOpenAuthModal = React.useCallback(() => setModalType('auth'), []);
   const handleRequestOpenPostModal = React.useCallback(() => setModalType('post'), []);

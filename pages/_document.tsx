@@ -4,9 +4,7 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="ja">
-        <Head>
-          <link rel="stylesheet" href="/webfont.css" />
-        </Head>
+        <Head></Head>
         <body>
           <Main />
           <div id="modal" />

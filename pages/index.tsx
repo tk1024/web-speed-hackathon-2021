@@ -14,6 +14,6 @@ export async function getStaticProps({ params }: any) {
     props: {
       posts: await fetch('https://wsh-2021-tk1024.herokuapp.com/api/v1/posts?offset=0&limit=10').then(res => res.json()),
     },
-    revalidate: 60,
+    revalidate: 600,
   };
 }
