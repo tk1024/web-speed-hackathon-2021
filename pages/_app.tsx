@@ -17,7 +17,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [data])
 
   useEffect(() => {
-    document.head.innerHTML += `<link rel="stylesheet" href="/webfont.css" />`
+    // document.head.innerHTML += `<link rel="stylesheet" href="/webfont2.css" />`
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      const text = Array.from(new Set(document.body!.innerText.split(""))).join("")
+      document.head.innerHTML += `<link rel="stylesheet" href="/api/v1/font?text=${encodeURIComponent(text)}" />`
+    }, 1000)
   }, [])
 
   const [modalType, setModalType] = React.useState('none');
