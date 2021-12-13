@@ -56,7 +56,7 @@ const TimelineItem = ({ post }: any) => {
         <div className="flex-grow-0 flex-shrink-0 pr-2 sm:pr-4">
           <Link href={`/users/${post.user.username}`}>
             <a className="block w-12 h-12 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-16 sm:h-16">
-              <img alt={post.user.profileImage.alt} src={getProfileImagePath(post.user.profileImage.id)} />
+              <img alt={post.user.profileImage.alt} src={getProfileImagePath(post.user.profileImage.id)} width={128} height={128} />
             </a>
           </Link>
         </div>
