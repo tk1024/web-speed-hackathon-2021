@@ -10,6 +10,9 @@ import { Post } from "./models";
 import { CLIENT_DIST_PATH } from "./paths";
 
 const html = fs.readFileSync(CLIENT_DIST_PATH + "/index.html")
+const cache = {
+  "/": { expired: 0 }
+}
 
 const app = Express();
 
@@ -29,11 +32,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw({ limit: '10mb' }));
 
 app.get("/", async (req, res) => {
-  const posts = await Post.findAll({
-    limit: 10,
-    offset: 0,
-  });
-  res.send(html.toString().replace("</title>", `</title><script>var initialProps = ${JSON.stringify(posts)}</script>`))
+  if (cache["/"].expired > Date.now()) {
+    res.send(cache["/"].html)
+  } else {
+    const posts = await Post.findAll({
+      limit: 10,
+      offset: 0,
+    });
+    cache["/"] = {
+      html: html.toString().replace("</title>", `</title><script>var initialProps = ${JSON.stringify(posts)}</script>`),
+      expired: Date.now() + 15 * 60 * 1000
+    }
+    res.send(cache["/"].html)
+  }
 })
 
 app.use('/api/v1', apiRouter);
