@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppPage } from '../../components/application/AppPage';
 import { useFetch } from '../../hooks/use_fetch';
@@ -13,14 +14,23 @@ const TimelineContainer = React.lazy(() => import('../TimelineContainer'));
 const UserProfileContainer = React.lazy(() => import('../UserProfileContainer'));
 
 /** @type {React.VFC} */
-const AppContainer = () => {
+const AppContainer = ({ initialProps }) => {
+  const [ips, setIps] = useState(initialProps)
   const [activeUser, setActiveUser] = React.useState(null);
   const { data } = useFetch('/api/v1/me', fetchJSON);
   const { pathname } = useLocation();
-  
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
+    setPrevPathname(pathname);
   }, [pathname]);
+
+  React.useEffect(() => {
+    if (pathname !== prevPathname) {
+      setIps(null)
+    }
+  }, [pathname])
 
   useEffect(() => {
     setActiveUser(data)
@@ -44,7 +54,7 @@ const AppContainer = () => {
       >
         <React.Suspense fallback={<>...</>}>
           <Routes>
-            <Route element={<TimelineContainer />} path="/" />
+            <Route element={<TimelineContainer initialProps={ips} />} path="/" />
             <Route element={<UserProfileContainer />} path="/users/:username" />
             <Route element={<PostContainer />} path="/posts/:postId" />
             <Route element={<TermContainer />} path="/terms" />
