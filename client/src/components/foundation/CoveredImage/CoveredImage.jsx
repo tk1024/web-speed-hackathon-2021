@@ -56,7 +56,6 @@ const CoveredImage = ({ alt, src, fv }) => {
         src={src}
         width={imageSize.width}
         height={imageSize.height}
-        loading="lazy"
       />
     </div>
   );
