@@ -24,13 +24,13 @@ const config = {
   },
   entry: {
     main: [
-      path.resolve(SRC_PATH, './index.css'),
+      // path.resolve(SRC_PATH, './index.css'),
       path.resolve(SRC_PATH, './buildinfo.js'),
       path.resolve(SRC_PATH, './index.jsx'),
     ],
-    webfont: [
-      path.resolve(SRC_PATH, './styles/webfont.css'),
-    ]
+    // webfont: [
+      // path.resolve(SRC_PATH, './styles/webfont.css'),
+    // ]
   },
   mode: 'none',
   module: {
@@ -84,7 +84,7 @@ const config = {
       filename: 'styles/[name].css',
     }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: "head",
       template: path.resolve(SRC_PATH, './index.html'),
     }),
   ],

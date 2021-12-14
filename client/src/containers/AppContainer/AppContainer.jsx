@@ -16,8 +16,8 @@ const UserProfileContainer = React.lazy(() => import('../UserProfileContainer'))
 const AppContainer = () => {
   const [activeUser, setActiveUser] = React.useState(null);
   const { data } = useFetch('/api/v1/me', fetchJSON);
-
   const { pathname } = useLocation();
+  
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -27,14 +27,7 @@ const AppContainer = () => {
   }, [data])
 
   React.useEffect(() => {
-    if (!document.getElementById("webfont")) {
-      fetch("/styles/webfont.css").then(res => res.text()).then(css => {
-        const style = document.createElement("style")
-        style.id = "webfont"
-        style.innerHTML = css
-        document.head.appendChild(style)
-      })
-    }
+    document.head.innerHTML += `<link rel="stylesheet" href="/styles/webfont.css">`
   }, [])
 
   const [modalType, setModalType] = React.useState('none');
