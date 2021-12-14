@@ -40,7 +40,7 @@ app.get("/", async (req, res) => {
       offset: 0,
     });
     cache["/"] = {
-      html: html.toString().replace("</title>", `</title><script>var initialProps = ${JSON.stringify(posts)}</script>`),
+      html: html.toString().replace("</body>", `<script>var initialProps = ${JSON.stringify(posts)}</script></body>`),
       expired: Date.now() + 15 * 60 * 1000
     }
     res.send(cache["/"].html)
