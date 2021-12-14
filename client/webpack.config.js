@@ -24,7 +24,6 @@ const config = {
   },
   entry: {
     main: [
-      'regenerator-runtime/runtime',
       path.resolve(SRC_PATH, './index.css'),
       path.resolve(SRC_PATH, './buildinfo.js'),
       path.resolve(SRC_PATH, './index.jsx'),
@@ -39,7 +38,26 @@ const config = {
       {
         exclude: /node_modules/,
         test: /\.jsx?$/,
-        use: [{ loader: 'babel-loader' }],
+        use: [{
+          loader: "swc-loader",
+          options: {
+            jsc: {
+              parser: {
+                syntax: "ecmascript",
+                jsx: true,
+              },
+              transform: {
+                react: {
+                  pragma: 'React.createElement',
+                  pragmaFrag: 'React.Fragment',
+                  throwIfNamespace: true,
+                  development: false,
+                  useBuiltins: false
+                }
+              }
+            }
+          }
+        }],
       },
       {
         test: /\.css$/i,

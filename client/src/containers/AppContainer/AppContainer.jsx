@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppPage } from '../../components/application/AppPage';
+import { useFetch } from '../../hooks/use_fetch';
+import { fetchJSON } from '../../utils/fetchers';
 import { AuthModalContainer } from '../AuthModalContainer';
 import { NewPostModalContainer } from '../NewPostModalContainer';
 
@@ -12,10 +14,17 @@ const UserProfileContainer = React.lazy(() => import('../UserProfileContainer'))
 
 /** @type {React.VFC} */
 const AppContainer = () => {
+  const [activeUser, setActiveUser] = React.useState(null);
+  const { data } = useFetch('/api/v1/me', fetchJSON);
+
   const { pathname } = useLocation();
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  useEffect(() => {
+    setActiveUser(data)
+  }, [data])
 
   React.useEffect(() => {
     if (!document.getElementById("webfont")) {
@@ -36,6 +45,7 @@ const AppContainer = () => {
   return (
     <>
       <AppPage
+        activeUser={activeUser}
         onRequestOpenAuthModal={handleRequestOpenAuthModal}
         onRequestOpenPostModal={handleRequestOpenPostModal}
       >
