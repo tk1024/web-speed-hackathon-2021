@@ -1,15 +1,66 @@
 {
+  "name": "web-speed-hackathon-2021-next",
   "private": true,
-  "license": "MPL-2.0",
   "scripts": {
-    "build": "yarn workspaces run build",
-    "start": "yarn workspace @web-speed-hackathon-2021/server start"
+    "dev": "echo \"export const ROOT_PATH = '[PATH]'\" | sed \"s|\\[PATH\\]|`pwd`|\" > root.ts && next dev",
+    "build": "npm run init && next build",
+    "start": "NODE_ENV=production node server.js -p $PORT",
+    "lint": "next lint",
+    "init": "sh init.sh"
   },
-  "workspaces": [
-    "client",
-    "server"
+  "cacheDirectories": [
+    ".next/cache"
   ],
-  "engines": {
-    "node": "16.x.x"
+  "dependencies": {
+    "@ffmpeg/core": "0.10.0",
+    "@ffmpeg/ffmpeg": "0.10.1",
+    "bcrypt": "5.0.1",
+    "classnames": "2.3.1",
+    "compression": "^1.7.4",
+    "cookies": "^0.8.0",
+    "express": "^4.17.1",
+    "fast-average-color": "7.0.1",
+    "http-errors": "^1.8.1",
+    "jschardet": "3.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mkdirp": "1.0.4",
+    "music-metadata": "7.11.4",
+    "next": "12.0.7",
+    "normalize.css": "8.0.1",
+    "npm-run-all": "4.1.5",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-helmet": "6.1.0",
+    "rimraf": "3.0.2",
+    "sequelize": "6.11.0",
+    "sharp": "0.29.3",
+    "sqlite3": "5.0.2",
+    "ulid": "2.3.0",
+    "uuid": "8.3.2",
+    "web-audio-api": "^0.2.2",
+    "wicg-inert": "3.1.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "10.0.28-alpha",
+    "@types/body-parser": "1.19.2",
+    "@types/cookies": "^0.7.7",
+    "@types/http-errors": "1.8.1",
+    "@types/jsonwebtoken": "^8.5.6",
+    "@types/lodash": "^4.14.178",
+    "@types/node": "16.11.12",
+    "@types/react": "17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "@types/react-helmet": "6.1.4",
+    "@types/serve-static": "1.13.10",
+    "@types/sharp": "0.29.4",
+    "@types/sqlite3": "3.1.7",
+    "@types/uuid": "8.3.3",
+    "autoprefixer": "^10.4.0",
+    "css-loader": "6.5.1",
+    "eslint": "^8.4.1",
+    "postcss": "^8.4.4",
+    "rimraf": "3.0.2",
+    "tailwindcss": "^3.0.0",
+    "typescript": "4.5.3"
   }
 }
