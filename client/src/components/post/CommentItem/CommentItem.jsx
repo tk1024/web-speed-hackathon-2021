@@ -1,7 +1,6 @@
-import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { ToJaFormatTimeString } from "../../../utils/ToJaFormatTimeString"
 import { getProfileImagePath } from '../../../utils/get_path';
 
 /**
@@ -33,8 +32,8 @@ const CommentItem = ({ comment }) => {
           </p>
           <p className="text-gray-800 text-sm leading-relaxed">{comment.text}</p>
           <p className="text-gray-500 text-xs">
-            <time dateTime={moment(comment.createdAt).toISOString()}>
-              {moment(comment.createdAt).locale('ja').format('LL')}
+            <time dateTime={new Date(comment.createdAt).toISOString()}>
+              {ToJaFormatTimeString(comment.createdAt)}
             </time>
           </p>
         </div>
