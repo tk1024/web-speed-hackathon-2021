@@ -1,8 +1,11 @@
 const path = require('path');
 
+const webpack = require('webpack');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const webpack = require('webpack');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
 
 const SRC_PATH = path.resolve(__dirname, './src');
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
@@ -20,7 +23,7 @@ const config = {
     },
     static: [PUBLIC_PATH, UPLOAD_PATH],
   },
-  devtool: 'inline-source-map',
+  devtool: false, // 'inline-source-map',
   entry: {
     main: [
       'core-js',
@@ -50,6 +53,7 @@ const config = {
     ],
   },
   output: {
+    publicPath: "/",
     filename: 'scripts/[name].js',
     path: DIST_PATH,
   },
@@ -70,9 +74,10 @@ const config = {
       filename: 'styles/[name].css',
     }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: true,
       template: path.resolve(SRC_PATH, './index.html'),
     }),
+    new HTMLInlineCSSWebpackPlugin(),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -80,6 +85,12 @@ const config = {
       fs: false,
       path: false,
     },
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new CssMinimizerPlugin(),
+    ],
   },
 };
 
