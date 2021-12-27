@@ -28,7 +28,7 @@ const AppContainer = () => {
 
   React.useEffect(() => {
     requestIdleCallback(() => {
-      document.head.innerHTML += `<link rel="stylesheet" href="/styles/webfont.css">`
+      document.querySelector('[href="/styles/webfont.mini.css"]').setAttribute("rel", "stylesheet")
     })
   }, [])
 
