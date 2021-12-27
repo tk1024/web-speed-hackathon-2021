@@ -5,12 +5,13 @@ import { Timeline } from '../Timeline';
 
 /**
  * @typedef {object} Props
+ * @property {string} username
  * @property {number} page
  */
 
 /** @type {React.VFC<Props>} */
-const TimelinePage = ({ page }) => {
-  const { data: timeline } = useSWR(`/api/v1/posts?offset=${10 * page}&limit=10`, (url) => fetch(url).then(res => res.json()))
+const TimelineUserPage = ({ page, username }) => {
+  const { data: timeline } = useSWR(`/api/v1/users/${username}/posts?offset=${10 * page}&limit=10`, (url) => fetch(url).then(res => res.json()))
 
   if(!timeline) {
     return null
@@ -19,4 +20,4 @@ const TimelinePage = ({ page }) => {
   return <Timeline timeline={timeline} />;
 };
 
-export { TimelinePage };
+export { TimelineUserPage };

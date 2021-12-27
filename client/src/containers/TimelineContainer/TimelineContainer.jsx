@@ -1,21 +1,24 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
 import { TimelinePage } from '../../components/timeline/TimelinePage';
-import { useInfiniteFetch } from '../../hooks/use_infinite_fetch';
-import { fetchJSON } from '../../utils/fetchers';
+
 
 /** @type {React.VFC} */
 const TimelineContainer = () => {
-  const { data: posts, fetchMore } = useInfiniteFetch('/api/v1/posts', fetchJSON);
+  const [cnt, setCnt] = React.useState(1)
+
+  const pages = []
+  for (let i = 0; i < cnt; i++) {
+    pages.push(<TimelinePage key={i} page={i} />)
+  }
 
   return (
-    <InfiniteScroll fetchMore={fetchMore} items={posts}>
+    <InfiniteScroll fetchMore={() => setCnt(page => page + 1)}>
       <Helmet>
         <title>タイムライン - CAwitter</title>
       </Helmet>
-      <TimelinePage timeline={posts} />
+      {pages}
     </InfiniteScroll>
   );
 };

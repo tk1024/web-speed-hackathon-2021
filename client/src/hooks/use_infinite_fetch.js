@@ -41,7 +41,7 @@ export function useInfiniteFetch(apiPath, fetcher) {
       offset,
     };
 
-    const promise = fetcher(apiPath);
+    const promise = fetcher(`${apiPath}?offset=${offset}&limit=${LIMIT}`)
 
     promise.then((allData) => {
       setResult((cur) => ({

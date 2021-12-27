@@ -1,20 +1,25 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
-
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
+import { TimelineUserPage } from '../../components/timeline/TimelineUserPage/TimelinePage';
 import { UserProfilePage } from '../../components/user_profile/UserProfilePage';
 import { useFetch } from '../../hooks/use_fetch';
-import { useInfiniteFetch } from '../../hooks/use_infinite_fetch';
 import { fetchJSON } from '../../utils/fetchers';
 import { NotFoundContainer } from '../NotFoundContainer';
+
 
 /** @type {React.VFC} */
 const UserProfileContainer = () => {
   const { username } = useParams();
+  const [cnt, setCnt] = React.useState(1)
 
   const { data: user, isLoading: isLoadingUser } = useFetch(`/api/v1/users/${username}`, fetchJSON);
-  const { data: posts, fetchMore } = useInfiniteFetch(`/api/v1/users/${username}/posts`, fetchJSON);
+
+  const pages = []
+  for (let i = 0; i < cnt; i++) {
+    pages.push(<TimelineUserPage key={i} page={i} username={username} />)
+  }
 
   if (isLoadingUser) {
     return (
@@ -29,11 +34,14 @@ const UserProfileContainer = () => {
   }
 
   return (
-    <InfiniteScroll fetchMore={fetchMore} items={posts}>
+    <InfiniteScroll fetchMore={() => setCnt(page => page + 1)}>
       <Helmet>
         <title>{user.name} さんのタイムライン - CAwitter</title>
       </Helmet>
-      <UserProfilePage timeline={posts} user={user} />
+      <UserProfilePage user={user} />
+      <div className="mt-6 border-t border-gray-300">
+        {pages}
+      </div>
     </InfiniteScroll>
   );
 };
