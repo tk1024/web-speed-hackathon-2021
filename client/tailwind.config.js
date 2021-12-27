@@ -1,9 +1,12 @@
 module.exports = {
   darkMode: false,
-  purge: [
-    './src/**/*.html',
-    './src/**/*.{js,jsx,ts,tsx}',
-  ],
+  purge: {
+    enabled: true,
+    content: [
+      './src/**/*.html',
+      './src/**/*.{js,jsx,ts,tsx}',
+    ]
+  },
   theme: {},
   variants: {},
   plugins: [],
