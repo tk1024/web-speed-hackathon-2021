@@ -32,7 +32,7 @@ const PausableMovie = ({ src }) => {
   return (
     <AspectRatioBox aspectHeight={1} aspectWidth={1}>
       <button className="group relative block w-full h-full" onClick={handleClick} type="button">
-        <video ref={ref} autoPlay={!prefersReducedMotion} muted loop>
+        <video ref={ref} autoPlay={!prefersReducedMotion} muted loop className="w-full h-full">
           <source src={src.replace("mp4", "webm")} type="video/webm" />
           <source src={src} type="video/mp4"></source>
         </video>
