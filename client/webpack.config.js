@@ -24,7 +24,7 @@ const config = {
     },
     static: [PUBLIC_PATH, UPLOAD_PATH],
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   entry: {
     main: [
       path.resolve(SRC_PATH, './index.css'),
@@ -43,7 +43,7 @@ const config = {
         test: /\.css$/i,
         use: [
           { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader', options: { url: false } },
+          { loader: 'css-loader', options: { url: false }},
           { loader: 'postcss-loader' },
         ],
       },

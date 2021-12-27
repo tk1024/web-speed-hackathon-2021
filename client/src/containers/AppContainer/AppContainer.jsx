@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Routes, useLocation } from 'react-router-dom';
-
 import { AppPage } from '../../components/application/AppPage';
 import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
