@@ -26,6 +26,12 @@ const AppContainer = () => {
     setActiveUser(data);
   }, [data]);
 
+  React.useEffect(() => {
+    requestIdleCallback(() => {
+      document.head.innerHTML += `<link rel="stylesheet" href="/styles/webfont.css">`
+    })
+  }, [])
+
   const [modalType, setModalType] = React.useState('none');
   const handleRequestOpenAuthModal = React.useCallback(() => setModalType('auth'), []);
   const handleRequestOpenPostModal = React.useCallback(() => setModalType('post'), []);
