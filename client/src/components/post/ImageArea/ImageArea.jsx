@@ -30,6 +30,8 @@ const ImageArea = ({ images }) => {
               <CoveredImage
                 alt={image.alt}
                 src={getImagePath(image.id, images.length >= 2)}
+                width={image.width}
+                height={image.height}
               />
             </div>
           );

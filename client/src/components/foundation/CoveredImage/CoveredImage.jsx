@@ -1,30 +1,20 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import { useFetch } from '../../../hooks/use_fetch';
-import { fetchBinary } from '../../../utils/fetchers';
 
 /**
  * @typedef {object} Props
  * @property {string} alt
  * @property {string} src
+ * @property {number} width
+ * @property {number} height
  */
 
 /**
  * アスペクト比を維持したまま、要素のコンテンツボックス全体を埋めるように画像を拡大縮小します
  * @type {React.VFC<Props>}
  */
-const CoveredImage = ({ alt, src }) => {
-  const [imageSize, setImageSize] = React.useState(null)
-
-  React.useEffect(() => {
-    const img = new Image()
-    img.onload = function () {
-      setImageSize({ width: this.width, height: this.height })
-    }
-    img.src = src
-  }, [src, setImageSize]);
-
+const CoveredImage = ({ alt, src, width, height }) => {
   const [containerSize, setContainerSize] = React.useState({ height: 0, width: 0 });
   /** @type {React.RefCallback<HTMLDivElement>} */
   const callbackRef = React.useCallback((el) => {
@@ -34,12 +24,8 @@ const CoveredImage = ({ alt, src }) => {
     });
   }, []);
 
-  if (!imageSize) {
-    return null;
-  }
-
   const containerRatio = containerSize.height / containerSize.width;
-  const imageRatio = imageSize.height / imageSize.width;
+  const imageRatio = height / width;
 
   return (
     <div ref={callbackRef} className="relative w-full h-full overflow-hidden">
@@ -49,8 +35,8 @@ const CoveredImage = ({ alt, src }) => {
           'w-auto h-full': containerRatio > imageRatio,
           'w-full h-auto': containerRatio <= imageRatio,
         })}
-        width={imageSize.width}
-        height={imageSize.height}
+        width={width}
+        height={height}
         src={src}
       />
     </div>
