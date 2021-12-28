@@ -1,11 +1,11 @@
 import { useState } from 'preact/hooks';
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
 import { CommentList } from "../../components/post/CommentList/CommentList";
 import { PostPage } from '../../components/post/PostPage';
+import { Title } from '../../components/title/title';
 import { NotFoundContainer } from '../NotFoundContainer';
 
 /** @type {React.VFC} */
@@ -21,9 +21,7 @@ const PostContainer = () => {
 
   if (isLoading) {
     return (
-      <Helmet>
-        <title>読込中 - CAwitter</title>
-      </Helmet>
+      <Title>読込中 - CAwitter</Title>
     );
   }
 
@@ -32,13 +30,14 @@ const PostContainer = () => {
   }
 
   return (
-    <InfiniteScroll fetchMore={() => setCnt(page => page + 1)}>
-      <Helmet>
-        <title>{post.user.name} さんのつぶやき - CAwitter</title>
-      </Helmet>
-      <PostPage post={post} />
-      {pages}
-    </InfiniteScroll>
+    <>
+      <Title>{post.user.name} さんのつぶやき - CAwitter</Title>
+      <InfiniteScroll fetchMore={() => setCnt(page => page + 1)}>
+
+        <PostPage post={post} />
+        {pages}
+      </InfiniteScroll>
+    </>
   );
 };
 

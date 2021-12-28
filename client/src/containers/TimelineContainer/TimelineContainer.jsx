@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks';
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Title } from "../../components/title/title"
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
 import { TimelinePage } from '../../components/timeline/TimelinePage';
 
@@ -14,12 +14,12 @@ const TimelineContainer = () => {
   }
 
   return (
-    <InfiniteScroll fetchMore={() => setCnt(page => page + 1)}>
-      <Helmet>
-        <title>タイムライン - CAwitter</title>
-      </Helmet>
-      {pages}
-    </InfiniteScroll>
+    <>
+      <Title>タイムライン - CAwitter</Title>
+      <InfiniteScroll fetchMore={() => setCnt(page => page + 1)}>
+        {pages}
+      </InfiniteScroll>
+    </>
   );
 };
 

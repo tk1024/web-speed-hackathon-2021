@@ -1,15 +1,13 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
-
 import { TermPage } from '../../components/term/TermPage';
+import { Title } from '../../components/title/title';
+
 
 /** @type {React.VFC} */
 const TermContainer = () => {
   return (
     <>
-      <Helmet>
-        <title>利用規約 - CAwitter</title>
-      </Helmet>
+      <Title>利用規約 - CAwitter</Title>
       <TermPage />
     </>
   );

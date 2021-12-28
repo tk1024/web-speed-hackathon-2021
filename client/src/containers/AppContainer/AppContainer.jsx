@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'preact/hooks';
 import React, { Suspense } from 'react';
-import { Helmet } from 'react-helmet';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppPage } from '../../components/application/AppPage';
+import { Title } from '../../components/title/title';
 import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
 
@@ -41,9 +41,7 @@ const AppContainer = () => {
 
   if (isLoading) {
     return (
-      <Helmet>
-        <title>読込中 - CAwitter</title>
-      </Helmet>
+      <Title>読込中 - CAwitter</Title>
     );
   }
 

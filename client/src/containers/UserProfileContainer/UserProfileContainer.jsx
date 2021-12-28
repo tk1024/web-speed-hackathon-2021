@@ -1,9 +1,9 @@
 import { useState } from 'preact/hooks';
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
 import { TimelineUserPage } from '../../components/timeline/TimelineUserPage/TimelinePage';
+import { Title } from '../../components/title/title';
 import { UserProfilePage } from '../../components/user_profile/UserProfilePage';
 import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
@@ -23,9 +23,7 @@ const UserProfileContainer = () => {
 
   if (isLoadingUser) {
     return (
-      <Helmet>
-        <title>読込中 - CAwitter</title>
-      </Helmet>
+      <Title>読込中 - CAwitter</Title>
     );
   }
 
@@ -34,15 +32,16 @@ const UserProfileContainer = () => {
   }
 
   return (
-    <InfiniteScroll fetchMore={() => setCnt(page => page + 1)}>
-      <Helmet>
-        <title>{user.name} さんのタイムライン - CAwitter</title>
-      </Helmet>
-      <UserProfilePage user={user} />
-      <div className="mt-6 border-t border-gray-300">
-        {pages}
-      </div>
-    </InfiniteScroll>
+    <>
+      <Title>{user.name} さんのタイムライン - CAwitter</Title>
+      <InfiniteScroll fetchMore={() => setCnt(page => page + 1)}>
+
+        <UserProfilePage user={user} />
+        <div className="mt-6 border-t border-gray-300">
+          {pages}
+        </div>
+      </InfiniteScroll>
+    </>
   );
 };
 
