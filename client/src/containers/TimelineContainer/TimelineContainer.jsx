@@ -1,12 +1,12 @@
+import { useState } from 'preact/hooks';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
 import { TimelinePage } from '../../components/timeline/TimelinePage';
 
-
 /** @type {React.VFC} */
 const TimelineContainer = () => {
-  const [cnt, setCnt] = React.useState(1)
+  const [cnt, setCnt] = useState(1)
 
   const pages = []
   for (let i = 0; i < cnt; i++) {

@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * @template T
  * @typedef {object} ReturnValues
@@ -7,7 +5,7 @@ import React from 'react';
  * @property {Error | null} error
  * @property {boolean} isLoading
  */
-
+import { useEffect, useState } from 'preact/hooks';
 /**
  * @template T
  * @param {string} apiPath
@@ -15,13 +13,13 @@ import React from 'react';
  * @returns {ReturnValues<T>}
  */
 export function useFetch(apiPath, fetcher) {
-  const [result, setResult] = React.useState({
+  const [result, setResult] = useState({
     data: null,
     error: null,
     isLoading: true,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     setResult(() => ({
       data: null,
       error: null,

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import React from 'react';
 
 /**
@@ -29,7 +30,6 @@ async function calculate(data) {
 
   return { max, peaks };
 }
-
 /**
  * @typedef {object} Props
  * @property {ArrayBuffer} soundData
@@ -39,10 +39,10 @@ async function calculate(data) {
  * @type {React.VFC<Props>}
  */
 const SoundWaveSVG = ({ soundData }) => {
-  const uniqueIdRef = React.useRef(Math.random().toString(16));
-  const [{ max, peaks }, setPeaks] = React.useState({ max: 0, peaks: [] });
+  const uniqueIdRef = useRef(Math.random().toString(16));
+  const [{ max, peaks }, setPeaks] = useState({ max: 0, peaks: [] });
 
-  React.useEffect(() => {
+  useEffect(() => {
     calculate(soundData).then(({ max, peaks }) => {
       setPeaks({ max, peaks });
     });

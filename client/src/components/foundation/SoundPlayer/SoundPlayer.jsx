@@ -1,11 +1,10 @@
+import { useCallback, useRef, useState } from 'preact/hooks';
 import React from 'react';
 import { useFetch } from '../../../hooks/use_fetch';
 import { getSoundPath, getSoundSvgPath } from '../../../utils/get_path';
 import { AspectRatioBox } from '../AspectRatioBox';
 import { FontAwesomeIcon } from '../FontAwesomeIcon';
-
 const fetcher = async (url) => await (await fetch(url)).text()
-
 /**
  * @typedef {object} Props
  * @property {Models.Sound} sound
@@ -17,17 +16,17 @@ const fetcher = async (url) => await (await fetch(url)).text()
 const SoundPlayer = ({ sound }) => {
   const { data: svg } = useFetch(getSoundSvgPath(sound.id), fetcher);
 
-  const [currentTimeRatio, setCurrentTimeRatio] = React.useState(0);
+  const [currentTimeRatio, setCurrentTimeRatio] = useState(0);
   /** @type {React.ReactEventHandler<HTMLAudioElement>} */
-  const handleTimeUpdate = React.useCallback((ev) => {
+  const handleTimeUpdate = useCallback((ev) => {
     const el = ev.currentTarget;
     setCurrentTimeRatio(el.currentTime / el.duration);
   }, []);
 
   /** @type {React.RefObject<HTMLAudioElement>} */
-  const audioRef = React.useRef(null);
-  const [isPlaying, setIsPlaying] = React.useState(false);
-  const handleTogglePlaying = React.useCallback(() => {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const handleTogglePlaying = useCallback(() => {
     setIsPlaying((isPlaying) => {
       if (isPlaying) {
         audioRef.current?.pause();

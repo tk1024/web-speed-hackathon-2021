@@ -1,4 +1,6 @@
+import { useEffect, useRef, useState } from 'preact/hooks';
 import React from 'react';
+
 
 /**
  * @typedef {object} Props
@@ -9,10 +11,10 @@ import React from 'react';
 
 /** @type {React.VFC<Props>} */
 const InfiniteScroll = ({ children, fetchMore }) => {
-  const [isLoading, setIsLoading] = React.useState(false)
-  const prevReachedRef = React.useRef(false);
+  const [isLoading, setIsLoading] = useState(false)
+  const prevReachedRef = useRef(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handler = async () => {
       const hasReached = window.innerHeight + Math.ceil(window.scrollY) >= document.body.offsetHeight;
 

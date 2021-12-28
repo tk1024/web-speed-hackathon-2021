@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useCallback, useState } from 'preact/hooks';
 import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
@@ -15,9 +16,9 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
  * @type {React.VFC<Props>}
  */
 const CoveredImage = ({ alt, src, width, height }) => {
-  const [containerSize, setContainerSize] = React.useState({ height: 0, width: 0 });
+  const [containerSize, setContainerSize] = useState({ height: 0, width: 0 });
   /** @type {React.RefCallback<HTMLDivElement>} */
-  const callbackRef = React.useCallback((el) => {
+  const callbackRef = useCallback((el) => {
     setContainerSize({
       height: el?.clientHeight ?? 0,
       width: el?.clientWidth ?? 0,

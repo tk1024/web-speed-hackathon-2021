@@ -1,3 +1,4 @@
+import { useCallback } from 'preact/hooks';
 import React from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Link, useNavigate } from 'react-router-dom';
@@ -39,7 +40,7 @@ const TimelineItem = ({ post }) => {
    * ボタンやリンク以外の箇所をクリックしたとき かつ 文字が選択されてないとき、投稿詳細ページに遷移する
    * @type {React.MouseEventHandler}
    */
-  const handleClick = React.useCallback(
+  const handleClick = useCallback(
     (ev) => {
       const isSelectedText = document.getSelection().isCollapsed === false;
       if (!isClickedAnchorOrButton(ev.target, ev.currentTarget) && !isSelectedText) {

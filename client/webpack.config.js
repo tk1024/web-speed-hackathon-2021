@@ -43,7 +43,7 @@ const config = {
         test: /\.css$/i,
         use: [
           { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader', options: { url: false }},
+          { loader: 'css-loader', options: { url: false } },
           { loader: 'postcss-loader' },
         ],
       },
@@ -79,6 +79,12 @@ const config = {
       fs: false,
       path: false,
     },
+    alias: {
+      "react": "preact/compat",
+      "react-dom/test-utils": "preact/test-utils",
+      "react-dom": "preact/compat",     // Must be below test-utils
+      "react/jsx-runtime": "preact/jsx-runtime"
+    }
   },
   optimization: {
     minimize: true,

@@ -1,10 +1,10 @@
+import { useCallback, useEffect, useState } from 'preact/hooks';
 import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppPage } from '../../components/application/AppPage';
 import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
-
 const TimelineContainer = React.lazy(() => import('../TimelineContainer').then(module => ({ default: module.TimelineContainer })));
 const UserProfileContainer = React.lazy(() => import('../UserProfileContainer').then(module => ({ default: module.UserProfileContainer })));
 const PostContainer = React.lazy(() => import('../PostContainer').then(module => ({ default: module.PostContainer })));
@@ -16,26 +16,26 @@ const AuthModalContainer = React.lazy(() => import('../AuthModalContainer').then
 /** @type {React.VFC} */
 const AppContainer = () => {
   const { pathname } = useLocation();
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  const [activeUser, setActiveUser] = React.useState(null);
+  const [activeUser, setActiveUser] = useState(null);
   const { data, isLoading } = useFetch('/api/v1/me', fetchJSON);
-  React.useEffect(() => {
+  useEffect(() => {
     setActiveUser(data);
   }, [data]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     requestIdleCallback(() => {
       document.querySelector('[href="/styles/webfont.mini.css"]').setAttribute("rel", "stylesheet")
     })
   }, [])
 
-  const [modalType, setModalType] = React.useState('none');
-  const handleRequestOpenAuthModal = React.useCallback(() => setModalType('auth'), []);
-  const handleRequestOpenPostModal = React.useCallback(() => setModalType('post'), []);
-  const handleRequestCloseModal = React.useCallback(() => setModalType('none'), []);
+  const [modalType, setModalType] = useState('none');
+  const handleRequestOpenAuthModal = useCallback(() => setModalType('auth'), []);
+  const handleRequestOpenPostModal = useCallback(() => setModalType('post'), []);
+  const handleRequestCloseModal = useCallback(() => setModalType('none'), []);
 
   if (isLoading) {
     return (
