@@ -5,6 +5,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppPage } from '../../components/application/AppPage';
 import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
+
 const TimelineContainer = React.lazy(() => import('../TimelineContainer').then(module => ({ default: module.TimelineContainer })));
 const UserProfileContainer = React.lazy(() => import('../UserProfileContainer').then(module => ({ default: module.UserProfileContainer })));
 const PostContainer = React.lazy(() => import('../PostContainer').then(module => ({ default: module.PostContainer })));
@@ -27,8 +28,9 @@ const AppContainer = () => {
   }, [data]);
 
   useEffect(() => {
-    requestIdleCallback(() => {
-      document.querySelector('[href="/styles/webfont.mini.css"]').setAttribute("rel", "stylesheet")
+    requestIdleCallback(async () => {
+      const { default: font } = await import("../../utils/font").then(module => ({ default: module.font }))
+      font()
     })
   }, [])
 
