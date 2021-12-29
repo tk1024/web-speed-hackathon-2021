@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from 'preact/hooks';
 import React, { Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import useSWR from 'swr';
 import { AppPage } from '../../components/application/AppPage';
-import { Title } from '../../components/title/title';
-import { useFetch } from '../../hooks/use_fetch';
 import { fetchJSON } from '../../utils/fetchers';
 
 const TimelineContainer = React.lazy(() => import('../TimelineContainer').then(module => ({ default: module.TimelineContainer })));
@@ -22,7 +21,8 @@ const AppContainer = () => {
   }, [pathname]);
 
   const [activeUser, setActiveUser] = useState(null);
-  const { data, isLoading } = useFetch('/api/v1/me', fetchJSON);
+  const { data } = useSWR('/api/v1/me', fetchJSON)
+
   useEffect(() => {
     setActiveUser(data);
   }, [data]);
@@ -38,12 +38,6 @@ const AppContainer = () => {
   const handleRequestOpenAuthModal = useCallback(() => setModalType('auth'), []);
   const handleRequestOpenPostModal = useCallback(() => setModalType('post'), []);
   const handleRequestCloseModal = useCallback(() => setModalType('none'), []);
-
-  if (isLoading) {
-    return (
-      <Title>読込中 - CAwitter</Title>
-    );
-  }
 
   return (
     <>
