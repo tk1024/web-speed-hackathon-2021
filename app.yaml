@@ -1,0 +1,39 @@
+runtime: nodejs
+env: flex
+
+entrypoint: NODE_ENV=production yarn start
+
+handlers:
+  - url: /favicon\.ico
+    static_files: favicon.ico
+    upload: favicon\.ico
+
+  - url: /fonts
+    static_dir: public/fonts
+    secure: always
+    http_headers:
+      X-Nyan-Header: nyan
+      Access-Control-Allow-Origin: "*"
+
+  - url: /images
+    static_dir: public/images
+    secure: always
+    http_headers:
+      X-Nyan-Header: nyan
+
+  - url: /movies
+    static_dir: public/movies
+    secure: always
+    http_headers:
+      X-Nyan-Header: nyan
+
+  - url: /styles
+    static_dir: public/styles
+    secure: always
+    http_headers:
+      X-Nyan-Header: nyan
+
+  - url: /.*
+    secure: always
+    redirect_http_response_code: 301
+    script: auto

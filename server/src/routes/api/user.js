@@ -1,7 +1,8 @@
 import Router from 'express-promise-router';
 import httpErrors from 'http-errors';
+import { User } from '../../models';
+import { getUser, getUserPosts } from './internal/user';
 
-import { Post, User } from '../../models';
 
 const router = Router();
 
@@ -35,12 +36,8 @@ router.put('/me', async (req, res) => {
 });
 
 router.get('/users/:username', async (req, res) => {
-  const user = await User.findOne({
-    where: {
-      username: req.params.username,
-    },
-  });
-
+  const user = await getUser(req.params.username)
+  
   if (user === null) {
     throw new httpErrors.NotFound();
   }
@@ -49,23 +46,14 @@ router.get('/users/:username', async (req, res) => {
 });
 
 router.get('/users/:username/posts', async (req, res) => {
-  const user = await User.findOne({
-    where: {
-      username: req.params.username,
-    },
-  });
-
-  if (user === null) {
-    throw new httpErrors.NotFound();
-  }
-
-  const posts = await Post.findAll({
+  const posts = await getUserPosts(req.params.username, {
     limit: req.query.limit,
     offset: req.query.offset,
-    where: {
-      userId: user.id,
-    },
-  });
+  })
+
+  if (posts === null) {
+    throw new httpErrors.NotFound();
+  }
 
   return res.status(200).type('application/json').send(posts);
 });

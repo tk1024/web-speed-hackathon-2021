@@ -1,21 +1,22 @@
 import Router from 'express-promise-router';
 import httpErrors from 'http-errors';
+import { Post } from '../../models';
+import { getPost, getPostComments, getPosts } from './internal/post';
 
-import { Comment, Post } from '../../models';
 
 const router = Router();
 
 router.get('/posts', async (req, res) => {
-  const posts = await Post.findAll({
+  const posts = await getPosts({
     limit: req.query.limit,
-    offset: req.query.offset,
-  });
+    offset: req.query.offset
+  })
 
   return res.status(200).type('application/json').send(posts);
 });
 
 router.get('/posts/:postId', async (req, res) => {
-  const post = await Post.findByPk(req.params.postId);
+  const post = await getPost(req.params.postId)
 
   if (post === null) {
     throw new httpErrors.NotFound();
@@ -25,15 +26,14 @@ router.get('/posts/:postId', async (req, res) => {
 });
 
 router.get('/posts/:postId/comments', async (req, res) => {
-  const posts = await Comment.findAll({
-    limit: req.query.limit,
-    offset: req.query.offset,
-    where: {
-      postId: req.params.postId,
-    },
-  });
+  const comments = await getPostComments(
+    req.params.postId,
+    {
+      limit: req.query.limit,
+      offset: req.query.offset,
+    })
 
-  return res.status(200).type('application/json').send(posts);
+  return res.status(200).type('application/json').send(comments);
 });
 
 router.post('/posts', async (req, res) => {
