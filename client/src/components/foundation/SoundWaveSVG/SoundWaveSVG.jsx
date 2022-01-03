@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { useEffect, useRef, useState } from 'preact/hooks';
-import React from 'react';
 
 /**
  * @param {ArrayBuffer} data

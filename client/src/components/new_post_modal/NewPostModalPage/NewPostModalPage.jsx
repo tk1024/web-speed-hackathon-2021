@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'preact/hooks';
-import React from 'react';
 import { FontAwesomeIcon } from '../../foundation/FontAwesomeIcon';
 import { ModalErrorMessage } from '../../modal/ModalErrorMessage';
 import { ModalSubmitButton } from '../../modal/ModalSubmitButton';

@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'preact/hooks';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter-preact';
 import { Modal } from '../../components/modal/Modal';
 import { NewPostModalPage } from '../../components/new_post_modal/NewPostModalPage';
 import { sendFile, sendJSON } from '../../utils/fetchers';
@@ -32,7 +31,7 @@ async function sendNewPost({ images, movie, sound, text }) {
 
 /** @type {React.VFC<Props>} */
 const NewPostModalContainer = ({ onRequestCloseModal }) => {
-  const navigate = useNavigate();
+  const [location, setLocation] = useLocation();
 
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,14 +46,14 @@ const NewPostModalContainer = ({ onRequestCloseModal }) => {
         setIsLoading(true);
         const post = await sendNewPost(params);
         onRequestCloseModal();
-        navigate(`/posts/${post.id}`);
+        setLocation(`/posts/${post.id}`);
       } catch (_err) {
         setHasError(true);
       } finally {
         setIsLoading(false);
       }
     },
-    [onRequestCloseModal, navigate],
+    [onRequestCloseModal, setLocation],
   );
 
   return (

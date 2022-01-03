@@ -1,6 +1,5 @@
 import { useState } from 'preact/hooks';
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useRoute } from 'wouter-preact';
 import useSWR from 'swr';
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
 import { CommentList } from "../../components/post/CommentList/CommentList";
@@ -10,7 +9,8 @@ import { NotFoundContainer } from '../NotFoundContainer';
 
 /** @type {React.VFC} */
 const PostContainer = () => {
-  const { postId } = useParams();
+  const [match, params] = useRoute("/posts/:postId");
+  const postId = params.postId
   const [cnt, setCnt] = useState(1)
   const { data: post, isValidating: isLoading } = useSWR(`/api/v1/posts/${postId}`, (url) => fetch(url).then(res => res.json()));
 

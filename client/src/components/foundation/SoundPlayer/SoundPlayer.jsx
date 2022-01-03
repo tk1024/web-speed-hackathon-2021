@@ -1,5 +1,4 @@
 import { useCallback, useRef, useState } from 'preact/hooks';
-import React from 'react';
 import { useFetch } from '../../../hooks/use_fetch';
 import { getSoundPath, getSoundSvgPath } from '../../../utils/get_path';
 import { AspectRatioBox } from '../AspectRatioBox';

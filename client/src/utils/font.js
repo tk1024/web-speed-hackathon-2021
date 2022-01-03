@@ -56,13 +56,11 @@ const fontList = {
 }
 
 export const font = () => {
-  requestIdleCallback(() => {
-    const style = document.createElement("style")
-    style.innerHTML = [["normal", 400], ["bold", 700]].map(([weightName, weightNum]) => {
-      return Object.entries(fontList).map(([id, unicodeRange]) => {
-        return `@font-face {font-display: swap;font-family: '源暎エムゴ';font-weight: ${weightNum};src: url(/fonts/genei-m-gothic/${weightName}/${id}.woff2) format('woff2');unicode-range: ${unicodeRange};} `
-      })
-    }).flat().join("\n")
-    document.head.appendChild(style)
-  })
+  const style = document.createElement("style")
+  style.innerHTML = [["normal", 400], ["bold", 700]].map(([weightName, weightNum]) => {
+    return Object.entries(fontList).map(([id, unicodeRange]) => {
+      return `@font-face {font-display: swap;font-family: '源暎エムゴ';font-weight: ${weightNum};src: url(/fonts/genei-m-gothic/${weightName}/${id}.woff2) format('woff2');unicode-range: ${unicodeRange};} `
+    })
+  }).flat().join("\n")
+  document.head.appendChild(style)
 }

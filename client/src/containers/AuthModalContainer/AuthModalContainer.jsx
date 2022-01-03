@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'preact/hooks';
-import React from 'react';
 import { AuthModalPage } from '../../components/auth_modal/AuthModalPage';
 import { Modal } from '../../components/modal/Modal';
 import { sendJSON } from '../../utils/fetchers';

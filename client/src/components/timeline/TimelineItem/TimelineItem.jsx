@@ -1,9 +1,8 @@
 import { useCallback } from 'preact/hooks';
-import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'wouter-preact';
 import { getProfileImagePath } from '../../../utils/get_path';
 import { ToJaFormatTimeString } from "../../../utils/ToJaFormatTimeString";
+import { LazyLoadImage } from '../../LazyLoadImage/LazyLoadImage';
 import { ImageArea } from '../../post/ImageArea';
 import { MovieArea } from '../../post/MovieArea';
 import { SoundArea } from '../../post/SoundArea';
@@ -34,7 +33,7 @@ const isClickedAnchorOrButton = (target, currentTarget) => {
 
 /** @type {React.VFC<Props>} */
 const TimelineItem = ({ post }) => {
-  const navigate = useNavigate();
+  const [location, setLocation] = useLocation();
 
   /**
    * ボタンやリンク以外の箇所をクリックしたとき かつ 文字が選択されてないとき、投稿詳細ページに遷移する
@@ -44,10 +43,10 @@ const TimelineItem = ({ post }) => {
     (ev) => {
       const isSelectedText = document.getSelection().isCollapsed === false;
       if (!isClickedAnchorOrButton(ev.target, ev.currentTarget) && !isSelectedText) {
-        navigate(`/posts/${post.id}`);
+        setLocation(`/posts/${post.id}`);
       }
     },
-    [post, navigate],
+    [post, setLocation],
   );
 
   return (
@@ -58,7 +57,7 @@ const TimelineItem = ({ post }) => {
             className="block w-12 h-12 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-16 sm:h-16"
             to={`/users/${post.user.username}`}
           >
-            <LazyLoadImage alt={post.user.profileImage.alt} src={getProfileImagePath(post.user.profileImage.id)} width={128} height={128} />
+            <LazyLoadImage alt={post.user.profileImage.alt} src={getProfileImagePath(post.user.profileImage.id)} width={128} height={128} loading="lazy" />
           </Link>
         </div>
         <div className="flex-grow flex-shrink min-w-0">

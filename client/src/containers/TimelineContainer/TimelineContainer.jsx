@@ -1,5 +1,4 @@
 import { useState } from 'preact/hooks';
-import React from 'react';
 import { Title } from "../../components/title/title"
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
 import { TimelinePage } from '../../components/timeline/TimelinePage';

@@ -1,4 +1,3 @@
-import React from 'react';
 import useSWR from "swr";
 import { CommentItem } from '../CommentItem';
 

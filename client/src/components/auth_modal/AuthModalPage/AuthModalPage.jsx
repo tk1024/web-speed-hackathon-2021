@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'preact/hooks';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter-preact';
 import { ModalErrorMessage } from '../../modal/ModalErrorMessage';
 import { ModalSubmitButton } from '../../modal/ModalSubmitButton';
 import { AuthInput } from '../AuthInput';

@@ -1,6 +1,5 @@
 import { useState } from 'preact/hooks';
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useRoute } from 'wouter-preact';
 import { InfiniteScroll } from '../../components/foundation/InfiniteScroll';
 import { TimelineUserPage } from '../../components/timeline/TimelineUserPage/TimelinePage';
 import { Title } from '../../components/title/title';
@@ -11,7 +10,8 @@ import { NotFoundContainer } from '../NotFoundContainer';
 
 /** @type {React.VFC} */
 const UserProfileContainer = () => {
-  const { username } = useParams();
+  const [match, params] = useRoute("/users/:name");
+  const username = params.username
   const [cnt, setCnt] = useState(1)
 
   const { data: user, isLoading: isLoadingUser } = useFetch(`/api/v1/users/${username}`, fetchJSON);

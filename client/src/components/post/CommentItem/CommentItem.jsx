@@ -1,8 +1,7 @@
-import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter-preact';
 import { getProfileImagePath } from '../../../utils/get_path';
 import { ToJaFormatTimeString } from "../../../utils/ToJaFormatTimeString";
+import { LazyLoadImage } from '../../LazyLoadImage/LazyLoadImage';
 
 /**
  * @typedef {object} Props
@@ -19,7 +18,7 @@ const CommentItem = ({ comment }) => {
             className="block w-8 h-8 bg-gray-300 border border-gray-300 rounded-full hover:opacity-75 overflow-hidden sm:w-12 sm:h-12"
             to={`/users/${comment.user.username}`}
           >
-            <LazyLoadImage alt={comment.user.profileImage.alt} src={getProfileImagePath(comment.user.profileImage.id)} width={128} height={128} />
+            <LazyLoadImage alt={comment.user.profileImage.alt} src={getProfileImagePath(comment.user.profileImage.id)} width={128} height={128} loading="lazy" />
           </Link>
         </div>
         <div className="flex-grow flex-shrink min-w-0">

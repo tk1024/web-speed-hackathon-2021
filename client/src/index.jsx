@@ -1,16 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { SWRConfig } from 'swr';
+import { h, render } from 'preact';
 import { AppContainer } from './containers/AppContainer';
 
 const { props } = JSON.parse(document.getElementById("initialProps").innerText)
 
-ReactDOM.render(
-  <SWRConfig value={{ fallback: props.fallback, revalidateIfStale: false }}>
-    <BrowserRouter>
-      <AppContainer />
-    </BrowserRouter>
-  </SWRConfig>,
-  document.getElementById('app'),
+if (process.env.NODE_ENV === 'development') {
+  // Must use require here as import statements are only allowed
+  // to exist at top-level.
+  require("preact/debug");
+}
+
+render(<AppContainer fallback={props} />, document.getElementById('app'),
 );
+
+window.addEventListener("load", () => {
+  const font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = '/styles/webfont.mini.css';
+  document.head.append(font);
+})

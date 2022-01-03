@@ -1,4 +1,5 @@
 const path = require('path');
+const zlib = require("zlib");
 
 const webpack = require('webpack');
 
@@ -7,6 +8,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
 const TerserPlugin = require("terser-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
+const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
+
 
 const SRC_PATH = path.resolve(__dirname, './src');
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
@@ -24,7 +29,6 @@ const config = {
     },
     static: [PUBLIC_PATH, UPLOAD_PATH],
   },
-  devtool: 'source-map',
   entry: {
     main: [
       path.resolve(SRC_PATH, './index.css'),
@@ -51,13 +55,10 @@ const config = {
   },
   output: {
     publicPath: "/",
-    filename: 'scripts/[name].js',
+    filename: 'scripts/[name]-[hash].js',
     path: DIST_PATH,
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      Buffer: ['buffer', 'Buffer'],
-    }),
     new webpack.EnvironmentPlugin({
       BUILD_DATE: new Date().toISOString(),
       // Heroku では SOURCE_VERSION 環境変数から commit hash を参照できます
@@ -72,6 +73,12 @@ const config = {
       template: path.resolve(SRC_PATH, './index.html'),
     }),
     new HTMLInlineCSSWebpackPlugin(),
+    new BrotliPlugin({
+			asset: '[path].br[query]',
+			test: /\.(js|css|html|svg)$/,
+			threshold: 10240,
+			minRatio: 0.8
+		}),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -79,11 +86,9 @@ const config = {
       fs: false,
       path: false,
     },
-    alias: {
+    "alias": {
       "react": "preact/compat",
-      "react-dom/test-utils": "preact/test-utils",
-      "react-dom": "preact/compat",     // Must be below test-utils
-      "react/jsx-runtime": "preact/jsx-runtime"
+      "react-dom": "preact/compat"
     }
   },
   optimization: {

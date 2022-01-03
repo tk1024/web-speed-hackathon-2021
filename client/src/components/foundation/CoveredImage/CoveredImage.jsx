@@ -1,7 +1,5 @@
 import classNames from 'classnames';
-import { useCallback, useState } from 'preact/hooks';
-import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { LazyLoadImage } from '../../LazyLoadImage/LazyLoadImage';
 
 /**
  * @typedef {object} Props
@@ -16,26 +14,11 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
  * @type {React.VFC<Props>}
  */
 const CoveredImage = ({ alt, src, width, height }) => {
-  const [containerSize, setContainerSize] = useState({ height: 0, width: 0 });
-  /** @type {React.RefCallback<HTMLDivElement>} */
-  const callbackRef = useCallback((el) => {
-    setContainerSize({
-      height: el?.clientHeight ?? 0,
-      width: el?.clientWidth ?? 0,
-    });
-  }, []);
-
-  const containerRatio = containerSize.height / containerSize.width;
-  const imageRatio = height / width;
-
   return (
-    <div ref={callbackRef} className="relative w-full h-full overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden">
       <LazyLoadImage
         alt={alt}
-        className={classNames('absolute left-1/2 top-1/2 max-w-none transform -translate-x-1/2 -translate-y-1/2', {
-          'w-auto h-full': containerRatio > imageRatio,
-          'w-full h-auto': containerRatio <= imageRatio,
-        })}
+        className={classNames('absolute w-full h-full object-cover left-1/2 top-1/2 max-w-none transform -translate-x-1/2 -translate-y-1/2')}
         width={width}
         height={height}
         src={src}

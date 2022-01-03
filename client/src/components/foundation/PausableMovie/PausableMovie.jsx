@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useCallback, useRef, useState } from 'preact/hooks';
-import React from 'react';
 import { AspectRatioBox } from '../AspectRatioBox';
 import { FontAwesomeIcon } from '../FontAwesomeIcon';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { NotFoundPage } from '../../components/application/NotFoundPage';
 import { Title } from '../../components/title/title';
 

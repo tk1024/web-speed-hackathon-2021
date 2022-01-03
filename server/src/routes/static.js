@@ -1,5 +1,6 @@
 import Router from 'express-promise-router';
 import serveStatic from 'serve-static';
+import expressStaticGzip from "express-static-gzip";
 
 import { CLIENT_DIST_PATH, PUBLIC_PATH, UPLOAD_PATH } from '../paths';
 
@@ -7,23 +8,31 @@ const router = Router();
 
 router.use(
   serveStatic(UPLOAD_PATH, {
-    etag: false,
-    lastModified: false,
+    maxAge: 10 * 60 * 1000
   }),
 );
 
 router.use(
-  serveStatic(PUBLIC_PATH, {
-    etag: false,
-    lastModified: false,
+  expressStaticGzip(PUBLIC_PATH, {
+    enableBrotli: true,
+    customCompressions: [{
+      encodingName: 'deflate',
+      fileExtension: 'zz'
+    }],
+    orderPreference: ['br'],
+    maxAge: 10 * 60 * 1000
   }),
 );
 
-router.use(
-  serveStatic(CLIENT_DIST_PATH, {
-    etag: false,
-    lastModified: false,
-    index: false,
+router.use("/scripts",
+  expressStaticGzip(`${CLIENT_DIST_PATH}/scripts`, {
+    enableBrotli: true,
+    customCompressions: [{
+      encodingName: 'deflate',
+      fileExtension: 'zz'
+    }],
+    orderPreference: ['br'],
+    maxAge: 10 * 60 * 1000
   }),
 );
 

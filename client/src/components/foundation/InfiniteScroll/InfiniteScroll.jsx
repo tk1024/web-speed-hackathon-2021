@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
-import React from 'react';
-
 
 /**
  * @typedef {object} Props
@@ -27,6 +25,8 @@ const InfiniteScroll = ({ children, fetchMore }) => {
 
       prevReachedRef.current = hasReached;
     };
+
+    handler();
 
     document.addEventListener('wheel', handler, { passive: true });
     document.addEventListener('touchmove', handler, { passive: true });
